@@ -1,0 +1,22 @@
+version: '2'
+services:
+  postgresql:
+    image: 'bitnami/postgresql:latest'
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+  odoo:
+    image: 'coobytec/odoo-app:latest'
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - '80:8069'
+      - '443:8071'
+    volumes:
+      - 'odoo_data:/coobytec/odoo-app'
+    depends_on:
+      - postgresql
+volumes:
+  postgresql_data:
+    driver: local
+  odoo_data:
+    driver: local
